@@ -6,7 +6,7 @@ Block for [i3blocks](https://github.com/vivien/i3blocks) which shows upcoming ev
 
 ## Dependencies
 - python
-- [gcacli](https://github.com/insanum/gcalcli)
+- [gcalcli](https://github.com/insanum/gcalcli)
 - [xterm](https://invisible-island.net/xterm/) - for showing calendar in popup window
 
 ## Installation
@@ -25,11 +25,13 @@ for_window [class="XTerm" title="i3blocks-gcalcli"] border none
 
 ```
 $ ./i3blocks_gcalcli.py -h
-i3blocks_gcalcli.py -e <event_calendars> -m <month_calendars>
+Usage:
+  i3blocks_gcalcli.py -e <event_calendars> -m <month_calendars> -f <font_family>
 
-Multiple calendars could be separated by comma.
-Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped.
-Month calendars are considered when showing full month after click.
+Options:
+  -e, --eventCalendars                  Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.
+  -m, --montCalendars                   Month calendars are considered when showing full month after click. Multiple values comma separated.
+  -f, --fontFamily                      Font family/face used for xterm window showing month calendar.
 ```
 
 List blocklet configuration in i3blocks config:
