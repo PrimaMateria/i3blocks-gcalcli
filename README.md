@@ -25,13 +25,14 @@ for_window [class="XTerm" title="i3blocks-gcalcli"] border none
 ```
 $ ./i3blocks_gcalcli.py -h
 Usage:
-  i3blocks_gcalcli.py -e <event_calendars> -m <month_calendars> -f <font_family>
+  i3blocks_gcalcli.py [options]
 
 Options:
   -e, --eventCalendars          Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.
-  -m, --montCalendars           Month calendars are considered when showing full month after click. Multiple values comma separated.
+  -m, --monthCalendars          Month calendars are considered when showing full month after click. Multiple values comma separated.
   -f, --fontFamily              Font family/face used for xterm window showing month calendar.
   -w, --width                   Cell width of month calendar. Minimum 10. Default 20.
+  -s, --status                  Status format. Possible values: datetimetitle, datetitle, title. Default datetimetitle.
 ```
 
 List blocklet configuration in i3blocks config:

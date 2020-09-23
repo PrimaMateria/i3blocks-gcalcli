@@ -7,6 +7,8 @@ import subprocess
 import math
 from dateutil.parser import parse
 
+statuses = ['datetimetitle', 'datetitle', 'title']
+
 def parse_event(line):
     tokens = line.split("\t")
     return {
@@ -31,7 +33,7 @@ def add_xterm_parameter(command, param, value):
     command.insert(index, value)
     return command
 
-def get_next_event(event_calendars):
+def get_next_event(event_calendars, status):
     process = subprocess.run(add_calendar_parameter(
             ['gcalcli',  'agenda', '--military', 'now', 'next 3 months', '--tsv'], event_calendars),
             stdout=subprocess.PIPE,
@@ -39,7 +41,16 @@ def get_next_event(event_calendars):
     agenda = process.stdout
     next_event = parse_event(agenda.splitlines()[0])
     dt = parse('{} {}'.format(next_event['date'], next_event['time']))
-    return '{:%d.%m} {}'.format(dt, next_event['title'])
+
+    status_output = ''
+    if (status == 'datetimetitle'):
+        status_output = '{:%d.%m %H:%M} {}'.format(dt, next_event['title'])
+    elif (status == 'datetitle'):
+        status_output = '{:%d.%m} {}'.format(dt, next_event['title'])
+    elif (status == 'title'):
+        status_output = next_event['title']
+
+    return status_output
 
 def show_month(month_calendars, font_family, width):
     right_border = 1
@@ -65,22 +76,24 @@ def show_month(month_calendars, font_family, width):
 
 def print_help():
     print('Usage:')
-    print('  i3blocks_gcalcli.py -e <event_calendars> -m <month_calendars> -f <font_family>')
+    print('  i3blocks_gcalcli.py [options]')
     print('')
     print('Options:')
     print('  -e, --eventCalendars\t\tEvent calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.')
-    print('  -m, --montCalendars\t\tMonth calendars are considered when showing full month after click. Multiple values comma separated.')
+    print('  -m, --monthCalendars\t\tMonth calendars are considered when showing full month after click. Multiple values comma separated.')
     print('  -f, --fontFamily\t\tFont family/face used for xterm window showing month calendar.')
     print('  -w, --width\t\t\tCell width of month calendar. Minimum 10. Default 20.')
+    print('  -s, --status\t\t\tStatus format. Possible values: datetimetitle, datetitle, title. Default datetimetitle.')
 
 def main(argv):
     event_calendars = ''
     month_calendars = ''
     font_family = None
     width = 20
+    status = 'datetimetitle'
 
     try:
-        opts, args = getopt.getopt(argv, "he:m:f:w:",["eventCalendars=", "monthCalendars=", "fontFamily=", "width="])
+        opts, args = getopt.getopt(argv, "he:m:f:w:s:",["eventCalendars=", "monthCalendars=", "fontFamily=", "width=", "status="])
     except getopt.GetoptError:
         print_help()
         sys.exit(2)
@@ -97,12 +110,17 @@ def main(argv):
             font_family = arg
         elif opt in ("-w", "--width"):
             width = int(arg)
+        elif opt in ("-s", "--status"):
+            if (arg not in statuses):
+                print_help();
+                sys.exit(2)
+            status = arg
 
     block_button = os.environ.get('BLOCK_BUTTON')
     if (block_button in ["1", "2", "3"]):
         show_month(month_calendars, font_family, width)
 
-    print(get_next_event(event_calendars))
+    print(get_next_event(event_calendars, status))
 
 
 if __name__ == "__main__":
