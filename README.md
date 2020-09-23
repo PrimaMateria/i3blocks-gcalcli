@@ -11,6 +11,7 @@ Block for [i3blocks](https://github.com/vivien/i3blocks) which shows upcoming ev
 
 ## Installation
 Install and setup gcalcli.
+Download the `i3blocks_gcalcli.py`
 
 Setup popup window style and position in i3 config:
 ```
@@ -18,6 +19,13 @@ Setup popup window style and position in i3 config:
 for_window [class="XTerm" title="i3blocks-gcalcli"] floating enable
 for_window [class="XTerm" title="i3blocks-gcalcli"] move absolute position 1665 25
 for_window [class="XTerm" title="i3blocks-gcalcli"] border none
+```
+
+List blocklet configuration in i3blocks config:
+```
+[gcalcli]
+command=<PATH_TO>/i3blocks_gcalcli.py -e "Holidays in Germany" -m "weather,Holidays in Germany,Sviatky na Slovensku" 
+interval=1800
 ```
 
 ## Usage
@@ -34,11 +42,3 @@ Options:
   -w, --width                   Cell width of month calendar. Minimum 10. Default 20.
   -s, --status                  Status format. Possible values: datetimetitle, datetitle, title. Default datetimetitle.
 ```
-
-List blocklet configuration in i3blocks config:
-```
-[gcalcli]
-command=i3blocks_gcalcli.py -e "Holidays in Germany" -m "weather,Holidays in Germany,Sviatky na Slovensku" 
-interval=1800
-```
-
