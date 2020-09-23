@@ -12,7 +12,7 @@ Block for [i3blocks](https://github.com/vivien/i3blocks) which shows upcoming ev
 ## Installation
 Install and setup gcalcli.
 
-Setup popup window size and position in i3 config:
+Setup popup window style and position in i3 config:
 ```
 # i3blocks-gcalcli
 for_window [class="XTerm" title="i3blocks-gcalcli"] floating enable
