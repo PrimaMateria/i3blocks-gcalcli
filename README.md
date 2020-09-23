@@ -16,8 +16,7 @@ Setup popup window size and position in i3 config:
 ```
 # i3blocks-gcalcli
 for_window [class="XTerm" title="i3blocks-gcalcli"] floating enable
-for_window [class="XTerm" title="i3blocks-gcalcli"] resize set 800 700 
-for_window [class="XTerm" title="i3blocks-gcalcli"] move absolute position 1790 25
+for_window [class="XTerm" title="i3blocks-gcalcli"] move absolute position 1665 25
 for_window [class="XTerm" title="i3blocks-gcalcli"] border none
 ```
 
@@ -29,9 +28,10 @@ Usage:
   i3blocks_gcalcli.py -e <event_calendars> -m <month_calendars> -f <font_family>
 
 Options:
-  -e, --eventCalendars                  Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.
-  -m, --montCalendars                   Month calendars are considered when showing full month after click. Multiple values comma separated.
-  -f, --fontFamily                      Font family/face used for xterm window showing month calendar.
+  -e, --eventCalendars          Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.
+  -m, --montCalendars           Month calendars are considered when showing full month after click. Multiple values comma separated.
+  -f, --fontFamily              Font family/face used for xterm window showing month calendar.
+  -w, --width                   Cell width of month calendar. Minimum 10. Default 20.
 ```
 
 List blocklet configuration in i3blocks config:
