@@ -1,12 +1,8 @@
 with import <nixpkgs> {};
 let 
-  pythonEnv = (python3.withPackages (ps: [
-    ps.dateutil 
-    ps.click
-  ] ));
+  pythonEnv = (python3.withPackages (ps: [ ] ));
 in mkShell {
   packages = [
     pythonEnv
-    gcalcli
   ];
 }

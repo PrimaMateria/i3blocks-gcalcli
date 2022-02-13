@@ -35,7 +35,7 @@ def add_xterm_parameter(command, param, value):
 
 def get_next_event(event_calendars, status, client_id, client_secret):
     process = subprocess.run(add_calendar_parameter(
-            ['gcalcli',  'agenda', '--military', 'now', 'next 3 months', '--tsv', '--client-id', client_id, '--client-secret', client_secret], event_calendars),
+            ['gcalcli', 'agenda', '--military', 'now', 'next 3 months', '--tsv', '--client-id', client_id, '--client-secret', client_secret], event_calendars),
             stdout=subprocess.PIPE,
             universal_newlines=True)
     agenda = process.stdout
@@ -58,7 +58,7 @@ def show_month(month_calendars, font_family, width, client_id, client_secret):
     days_on_row = 7 
     xterm_width = (width + left_border) * days_on_row + right_border
 
-    calendar_command = ['gcalcli', 'calm', '--monday', '--military', '--width', str(width), '--client-id', client_id, '--client-secret', client_secret]
+    calendar_command = ['gcalcli', '--client-id', client_id, '--client-secret', client_secret, 'calm', '--monday', '--military', '--width', str(width) ]
     calendar_command = add_calendar_parameter(calendar_command, month_calendars)
     calendar_output = subprocess.check_output(calendar_command)
 
