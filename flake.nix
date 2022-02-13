@@ -13,7 +13,7 @@
           homePage = "https://github.com/PrimaMateria/i3blocks-gcalcli";
           description = "Shows upcoming event in the status bar and full month when clicked on.";
         };
-        propagatedBuildInputs = [ python3.pkgs.dateutil python3.pkgs.click ];
+        propagatedBuildInputs = [ python3.pkgs.dateutil python3.pkgs.click gcalcli ];
       };
   };
 }
