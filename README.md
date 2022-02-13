@@ -11,7 +11,7 @@ Block for [i3blocks](https://github.com/vivien/i3blocks) which shows upcoming ev
 
 ## Installation
 Install and setup gcalcli.
-Download the `i3blocks_gcalcli.py`
+Download the `i3blocks-gcalcli.py`
 
 Setup popup window style and position in i3 config:
 ```
@@ -24,16 +24,16 @@ for_window [class="XTerm" title="i3blocks-gcalcli"] border none
 List blocklet configuration in i3blocks config:
 ```
 [gcalcli]
-command=<PATH_TO>/i3blocks_gcalcli.py -e "Holidays in Germany" -m "weather,Holidays in Germany,Sviatky na Slovensku" 
+command=<PATH_TO>/i3blocks-gcalcli.py -e "Holidays in Germany" -m "weather,Holidays in Germany,Sviatky na Slovensku" 
 interval=1800
 ```
 
 ## Usage
 
 ```
-$ ./i3blocks_gcalcli.py -h
+$ ./i3blocks-gcalcli.py -h
 Usage:
-  i3blocks_gcalcli.py [options]
+  i3blocks-gcalcli.py [options]
 
 Options:
   -e, --eventCalendars          Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.

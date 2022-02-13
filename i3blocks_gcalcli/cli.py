@@ -1,12 +1,12 @@
-#!/usr/bin/python
-
 import sys
 import getopt
 import os
 import subprocess
 import math
+import click
 from dateutil.parser import parse
 
+CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 statuses = ['datetimetitle', 'datetitle', 'title']
 
 def parse_event(line):
@@ -74,54 +74,36 @@ def show_month(month_calendars, font_family, width):
 
     subprocess.run(command)
 
-def print_help():
-    print('Usage:')
-    print('  i3blocks_gcalcli.py [options]')
-    print('')
-    print('Options:')
-    print('  -e, --eventCalendars\t\tEvent calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.')
-    print('  -m, --monthCalendars\t\tMonth calendars are considered when showing full month after click. Multiple values comma separated.')
-    print('  -f, --fontFamily\t\tFont family/face used for xterm window showing month calendar.')
-    print('  -w, --width\t\t\tCell width of month calendar. Minimum 10. Default 20.')
-    print('  -s, --status\t\t\tStatus format. Possible values: datetimetitle, datetitle, title. Default datetimetitle.')
+@click.group(context_settings=CONTEXT_SETTINGS)
+@click.version_option(version="1.0.0")
+def main():
+    pass
 
-def main(argv):
-    event_calendars = ''
-    month_calendars = ''
-    font_family = None
-    width = 20
-    status = 'datetimetitle'
+@cli.command()
+@click.option("-e", "--eventCalendars", default="", help="Event calendars are considered when getting next upcoming event. Probably weather calendar should be skipped. Multiple values comma separated.")
+@click.option("-m", "--monthCalendars", default="", help="Month calendars are considered when showing full month after click. Multiple values comma separated.")
+@click.option("-f", "--fontFamily", default=None, help="Font family/face used for xterm window showing month calendar.")
+@click.option("-w", "--width", default=20, type=int, help="Cell width of month calendar. Minimum 10.")
+@click.option("-s", "--status", default="datetimetitle",  type=click.Choice(['datetimetitle', 'datetitle', 'titlte'], help="Status format.")
+def print(**kwargs):
+    event_calendars = kwargs["eventCalendars"].split(",")
+    month_calendars = kwargs["monthCalendars"].split(",")
+    font_family = kwargs["fontFamily"]
+    width = kwargs["width"]
+    status = kwargs["status"]
 
-    try:
-        opts, args = getopt.getopt(argv, "he:m:f:w:s:",["eventCalendars=", "monthCalendars=", "fontFamily=", "width=", "status="])
-    except getopt.GetoptError:
-        print_help()
-        sys.exit(2)
+    print(event_calendars)
+    print(month_calendars)
+    print(font_family)
+    print(width)
+    print(status)
 
-    for opt, arg in opts:
-        if opt == '-h':
-            print_help()
-            sys.exit()
-        elif opt in ("-e", "--eventCalendars"):
-            event_calendars = arg.split(",")
-        elif opt in ("-m", "--monthCalendars"):
-            month_calendars = arg.split(",")
-        elif opt in ("-f", "--fontFamily"):
-            font_family = arg
-        elif opt in ("-w", "--width"):
-            width = int(arg)
-        elif opt in ("-s", "--status"):
-            if (arg not in statuses):
-                print_help();
-                sys.exit(2)
-            status = arg
+    # block_button = os.environ.get('BLOCK_BUTTON')
+    # if (block_button in ["1", "2", "3"]):
+        # show_month(month_calendars, font_family, width)
 
-    block_button = os.environ.get('BLOCK_BUTTON')
-    if (block_button in ["1", "2", "3"]):
-        show_month(month_calendars, font_family, width)
-
-    print(get_next_event(event_calendars, status))
+    # print(get_next_event(event_calendars, status))
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
